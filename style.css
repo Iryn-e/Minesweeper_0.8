@@ -1,0 +1,64 @@
+body
+{
+    background-color: gray;
+}
+
+h2
+{
+    color: darkslategray;
+    border-bottom:1px solid darkslategray;
+    text-decoration: underline;
+    font-family: 'Courier New', Courier, monospace;
+}
+
+#box
+{
+    text-align: center;
+    user-select: none;
+}
+
+#lost
+{
+    display: none;
+}
+
+#info
+{
+    display:inline-block;
+}
+
+#face
+{
+    background-color:rgb(195, 195, 195);
+    padding: 5px;
+    float: none;
+    margin:0 auto;
+    display: table;
+    cursor: pointer;
+    border: 1px ridge rgb(19, 18, 18);
+}
+
+#field table
+{
+    border-collapse: collapse;
+    font-weight: bold;
+    margin: 10px auto;
+
+}
+
+#field table td
+{
+    background-color: rgb(195, 195, 195);
+    width: 30px;
+    height: 30px;
+    border: 1px solid rgb(19, 18, 18);
+}
+
+#field table td div
+{
+    content: "\A";
+    white-space: pre;
+    width: 30px;
+    height: 30px;
+    border: 1px solid rgb(19, 18, 18);
+}

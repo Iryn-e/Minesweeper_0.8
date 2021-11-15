@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js"></script>
+    <title>Mining</title>
+</head>
+<body onmousedown="MouseDown()" onmouseup="MouseUp()">
+    <div id="box">
+        <h2>Minesweeper</h2>
+        <div id="options" class="dropdown-content">
+            <select name="difficulty" id="diff">
+                <option value="1" onclick="reload()">Beginner</option>
+                <option value="2" onclick="reload()">Intermediate</option>
+                <option value="3" onclick="reload()">Expert</option>
+            </select>
+        </div>
+        <hr>
+        <div id="info">
+            <p id="timerMin"></p>
+            <p id="timerSec"></p>
+            <p id="face" onclick="reload()">🙂</p>
+            <p id="bombs-left"></p>
+        </div>
+        <div id="field"></div>
+        <br>
+        <div id="lost">
+            <h3>Boom! Game Over.</h3>
+            <button id="new-game" type="button" onclick="reload()">Try Again</button>
+        </div>
+    </div>
+</body>
+</html>
