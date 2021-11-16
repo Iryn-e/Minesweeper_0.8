@@ -174,37 +174,208 @@ function Adjacent(cell)
 
     while (amount == 0)
     {
-        if (document.getElementById("cell-"+(cellRow-1)+"-"+(cellCol-1)).bomb)
+        if(cellRow == 0 && cellCol == 0)
         {
-            amount++;
+            if (document.getElementById("cell-"+(cellRow)+"-"+(cellCol+1)).bomb === true)
+            {
+                amount++;
+            }
+            if (document.getElementById("cell-"+(cellRow+1)+"-"+(cellCol+1)).bomb === true)
+            {
+                amount++;
+            }
+            if (document.getElementById("cell-"+(cellRow+1)+"-"+(cellCol)).bomb === true)
+            {
+                amount++;
+            }
+            return amount;
         }
-        if (document.getElementById("cell-"+(cellRow-1)+"-"+(cellCol)).bomb)
+
+        else if(cellRow == 0 && cellCol == components.numCols-1)
         {
-            amount++;
+            if (document.getElementById("cell-"+(cellRow)+"-"+(cellCol-1)).bomb === true)
+            {
+                amount++;
+            }
+            if (document.getElementById("cell-"+(cellRow+1)+"-"+(cellCol-1)).bomb === true)
+            {
+                amount++;
+            }
+            if (document.getElementById("cell-"+(cellRow+1)+"-"+(cellCol)).bomb === true)
+            {
+                amount++;
+            }
+            return amount;
         }
-        if (document.getElementById("cell-"+(cellRow-1)+"-"+(cellCol+1)).bomb)
+
+        else if (cellRow == components.numRows-1 && cellCol == 0)
         {
-            amount++;
+            if (document.getElementById("cell-"+(cellRow-1)+"-"+(cellCol)).bomb == true)
+            {
+                amount++;
+            }
+            if (document.getElementById("cell-"+(cellRow-1)+"-"+(cellCol+1)).bomb == true)
+            {
+                amount++;
+            }
+            if (document.getElementById("cell-"+(cellRow)+"-"+(cellCol+1)).bomb === true)
+            {
+                amount++;
+            }
+            return amount;
         }
-        if (document.getElementById("cell-"+(cellRow)+"-"+(cellCol-1)).bomb)
+
+        else if (cellRow == components.numRows-1 && cellCol == components.numCols-1)
         {
-            amount++;
+            if (document.getElementById("cell-"+(cellRow-1)+"-"+(cellCol-1)).bomb == true)
+            {
+                amount++;
+            }
+            if (document.getElementById("cell-"+(cellRow-1)+"-"+(cellCol)).bomb == true)
+            {
+                amount++;
+            }
+            if (document.getElementById("cell-"+(cellRow)+"-"+(cellCol-1)).bomb == true)
+            {
+                amount++;
+            }
+            return amount;
         }
-        if (document.getElementById("cell-"+(cellRow)+"-"+(cellCol+1)).bomb)
+
+        else if(cellRow == 0)
         {
-            amount++;
+            if (document.getElementById("cell-"+(cellRow)+"-"+(cellCol-1)).bomb == true)
+            {
+                amount++;
+            }
+            if (document.getElementById("cell-"+(cellRow)+"-"+(cellCol+1)).bomb === true)
+            {
+                amount++;
+            }
+            if (document.getElementById("cell-"+(cellRow+1)+"-"+(cellCol-1)).bomb === true)
+            {
+                amount++;
+            }
+            if (document.getElementById("cell-"+(cellRow+1)+"-"+(cellCol)).bomb === true)
+            {
+                amount++;
+            }
+            if (document.getElementById("cell-"+(cellRow+1)+"-"+(cellCol+1)).bomb === true)
+            {
+                amount++;
+            }
+            return amount;
         }
-        if (document.getElementById("cell-"+(cellRow+1)+"-"+(cellCol-1)).bomb)
+
+        else if(cellCol == 0)
         {
-            amount++;
+            if (document.getElementById("cell-"+(cellRow-1)+"-"+(cellCol)).bomb == true)
+            {
+                amount++;
+            }
+            if (document.getElementById("cell-"+(cellRow-1)+"-"+(cellCol+1)).bomb == true)
+            {
+                amount++;
+            }
+            if (document.getElementById("cell-"+(cellRow)+"-"+(cellCol+1)).bomb === true)
+            {
+                amount++;
+            }
+            if (document.getElementById("cell-"+(cellRow+1)+"-"+(cellCol)).bomb === true)
+            {
+                amount++;
+            }
+            if (document.getElementById("cell-"+(cellRow+1)+"-"+(cellCol+1)).bomb === true)
+            {
+                amount++;
+            }
+            return amount;
         }
-        if (document.getElementById("cell-"+(cellRow+1)+"-"+(cellCol)).bomb)
+
+        else if (cellRow == components.numRows-1)
         {
-            amount++;
+            if (document.getElementById("cell-"+(cellRow-1)+"-"+(cellCol-1)).bomb == true)
+            {
+                amount++;
+            }
+            if (document.getElementById("cell-"+(cellRow-1)+"-"+(cellCol)).bomb == true)
+            {
+                amount++;
+            }
+            if (document.getElementById("cell-"+(cellRow-1)+"-"+(cellCol+1)).bomb == true)
+            {
+                amount++;
+            }
+            if (document.getElementById("cell-"+(cellRow)+"-"+(cellCol-1)).bomb == true)
+            {
+                amount++;
+            }
+            if (document.getElementById("cell-"+(cellRow)+"-"+(cellCol+1)).bomb === true)
+            {
+                amount++;
+            }
+            return amount;
         }
-        if (document.getElementById("cell-"+(cellRow+1)+"-"+(cellCol+1)).bomb)
+
+        else if (cellCol == components.numCols-1)
         {
-            amount++;
+            if (document.getElementById("cell-"+(cellRow-1)+"-"+(cellCol-1)).bomb == true)
+            {
+                amount++;
+            }
+            if (document.getElementById("cell-"+(cellRow-1)+"-"+(cellCol)).bomb == true)
+            {
+                amount++;
+            }
+            if (document.getElementById("cell-"+(cellRow)+"-"+(cellCol-1)).bomb == true)
+            {
+                amount++;
+            }
+            if (document.getElementById("cell-"+(cellRow+1)+"-"+(cellCol-1)).bomb === true)
+            {
+                amount++;
+            }
+            if (document.getElementById("cell-"+(cellRow+1)+"-"+(cellCol)).bomb === true)
+            {
+                amount++;
+            }
+            return amount;
+        }
+        
+        else
+        {
+            if (document.getElementById("cell-"+(cellRow-1)+"-"+(cellCol-1)).bomb == true)
+            {
+                amount++;
+            }
+            if (document.getElementById("cell-"+(cellRow-1)+"-"+(cellCol)).bomb == true)
+            {
+                amount++;
+            }
+            if (document.getElementById("cell-"+(cellRow-1)+"-"+(cellCol+1)).bomb == true)
+            {
+                amount++;
+            }
+            if (document.getElementById("cell-"+(cellRow)+"-"+(cellCol-1)).bomb == true)
+            {
+                amount++;
+            }
+            if (document.getElementById("cell-"+(cellRow)+"-"+(cellCol+1)).bomb === true)
+            {
+                amount++;
+            }
+            if (document.getElementById("cell-"+(cellRow+1)+"-"+(cellCol-1)).bomb === true)
+            {
+                amount++;
+            }
+            if (document.getElementById("cell-"+(cellRow+1)+"-"+(cellCol)).bomb === true)
+            {
+                amount++;
+            }
+            if (document.getElementById("cell-"+(cellRow+1)+"-"+(cellCol+1)).bomb === true)
+            {
+                amount++;
+            }
         }
     
         /*if (amount == 0)
@@ -225,38 +396,6 @@ function Adjacent(cell)
         }*/
         return amount;
     }
-
-    /*amount = 0;
-    if (cell.bomb[i-1][j-1]){
-        amount++
-    }
-    if (cell.bomb[i-1][j]){
-        amount++
-    }
-    if (cell.bomb[i-1][j+1]){
-        amount++
-    }
-    if (cell.bomb[i][j-1]){
-        amount++
-    }
-    if (cell.bomb[i][j+1]){
-        amount++
-    }
-    if (cell.bomb[i+1][j-1]){
-        amount++
-    }
-    if (cell.bomb[i+1][j]){
-        amount++
-    }
-    if (cell.bomb[i+1][j+1]){
-        amount++
-    }
-    if (amount == 0)
-    {
-        amount = null;
-    }
-    return amount;
-    */
 }
 
 /*function AutoClear(cell, i, j)
