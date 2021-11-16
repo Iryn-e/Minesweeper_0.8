@@ -1,6 +1,4 @@
-# Minesweeper_0.8
-
-There is a bug where the cells don't detect bombs when revealed around the edges, kind of like ignoring the pizza crust.
+# Minesweeper_0.9
 
 It is missing the victory condition.
 
