@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
     <script src="script.js"></script>
-    <title>Mining</title>
+    <title id="title">Mining</title>
 </head>
 <body onmousedown="MouseDown()" onmouseup="MouseUp()">
     <div id="box">
@@ -16,14 +16,25 @@
                 <option value="1" onclick="reload()">Beginner</option>
                 <option value="2" onclick="reload()">Intermediate</option>
                 <option value="3" onclick="reload()">Expert</option>
+                <option value="4" onclick="OptionVisible()">Custom...</option>
             </select>
+            <br>
+            <form id="hiddencustom">
+                <label for="nrows">Number of rows</label>
+                <input type="number" id="nrows">
+                <label for="ncols">Number of columns</label>
+                <input type="number" id="ncols">
+                <label for="ncols">Number of bombs</label>
+                <input type="number" id="nbombs">
+                <button value="submit" onclick="reload()">Initialize</button>
+            </form>
         </div>
         <hr>
-        <div id="info">
-            <p id="timerMin"></p>
-            <p id="timerSec"></p>
+        <div id="lamp">
             <p id="face" onclick="reload()">🙂</p>
-            <p id="bombs-left"></p>
+            <div id="info"><br>
+                <label id="bombs-left"></label>
+            </div>
         </div>
         <div id="field"></div>
         <br>

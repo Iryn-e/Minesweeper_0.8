@@ -14,17 +14,20 @@ h2
 #box
 {
     text-align: center;
-    user-select: none;
 }
 
+#hiddencustom
+{
+    visibility: hidden;
+}
 #lost
 {
     display: none;
 }
 
-#info
+#lamp
 {
-    display:inline-block;
+    user-select: none;
 }
 
 #face
@@ -38,12 +41,18 @@ h2
     border: 1px ridge rgb(19, 18, 18);
 }
 
+#info
+{
+    -ms-flex-align: baseline;
+    font-size: large;
+}
+
 #field table
 {
     border-collapse: collapse;
     font-weight: bold;
     margin: 10px auto;
-
+    user-select: none
 }
 
 #field table td

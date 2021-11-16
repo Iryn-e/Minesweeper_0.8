@@ -5,9 +5,14 @@ var components =
     numRows : 9,
     numCols : 9,
     numBombs : 10,
+    flagged : 0,
+    numSafe : -1,
     bomb : '¤',
-    alive : true
+    alive : true,
+    victory : false,
+    colors : {1: 'blue', 2: 'green', 3: 'red', 4: 'purple', 5: 'maroon', 6: 'turquoise', 7: 'black', 8: 'grey'}
 }
+var totalSeconds = 0;
 
 function Difficulty()
 {
@@ -29,6 +34,18 @@ function Difficulty()
         components.numCols = 16;
         components.numBombs = 99;
     }
+    if (document.getElementById("diff").value == "4")
+    {
+        components.numRows = document.getElementById("nrows").value;
+        components.numCols = document.getElementById("ncols").value;
+        components.numBombs = document.getElementById("nbombs").value;
+    }
+}
+
+function OptionVisible()
+{
+    var custom = document.getElementById("hiddencustom");
+    custom.style.visibility = 'visible';
 }
 
 window.addEventListener('load', function() 
@@ -39,7 +56,9 @@ window.addEventListener('load', function()
 function StartGame()
 {
     Difficulty()
-    document.getElementById('bombs-left').innerHTML = components.numBombs+" Bombs";
+    components.flagged = components.numBombs;
+    components.numSafe = (components.numRows * components.numCols) - components.numBombs;
+    document.getElementById('bombs-left').innerHTML = components.flagged;
     document.getElementById('field').appendChild(CreateTable());
     PlaceBombs();
 }
@@ -80,18 +99,15 @@ function CreateTable()
 
 function OnClick(cell, row, col)
 {
-    if (cell.clicked == false)
-    {
-        t = document.getElementById('timer');
-        timer(t);
-
-        cell.clicked = true;
-    }
-    if (!components.alive)
+    if (!components.alive || components.victory)
     {
         return;
     }
     if (cell.textContent == "🚩" || cell.textContent == "?")
+    {
+        return;
+    }
+    if (cell.style.backgroundColor == 'darkgray')
     {
         return;
     }
@@ -109,18 +125,29 @@ function OnClick(cell, row, col)
         {
             bombnum = null;
         }
+        if (bombnum != null)
+        {
+            cell.style.color = components.colors[bombnum];
+        }
         cell.textContent = bombnum;
+        components.numSafe = components.numSafe - 1;
+        if (components.numSafe == 0)
+        {
+            GameWin();
+        }
     }
 }
 
-function Timer()
-{
 
+function CountTimer() 
+{
+    totalSeconds = totalSeconds + 5;
+    document.getElementById("timersecs").innerHTML = totalSeconds;
 }
 
 function MouseDown()
 {
-    if (!components.alive)
+    if (!components.alive || !components.victory)
     {
         return;
     }
@@ -128,7 +155,7 @@ function MouseDown()
 }
 function MouseUp()
 {
-    if (!components.alive)
+    if (!components.alive || !components.victory)
     {
         return;
     }
@@ -147,9 +174,14 @@ function Flag(cell)
         if (cell.textContent == "?")
         {
             cell.textContent = "";
+            components.flagged = components.flagged+1;
+            document.getElementById("bombs-left").innerHTML = components.flagged;
             return;
         }
         cell.textContent = "🚩";
+        components.flagged = components.flagged-1;
+        document.getElementById("bombs-left").innerHTML = components.flagged;
+
         return;
     }
 }
@@ -161,9 +193,15 @@ function PlaceBombs()
         var nrow = Math.floor(Math.random() * components.numCols);
         var ncol = Math.floor(Math.random() * components.numRows);
         bombCell = document.getElementById("cell-"+nrow+"-"+ncol);
+        if (bombCell.bomb)
+        {
+            i--;
+            continue;
+        }
         console.log("Bomb at : "+nrow, ncol);
         bombCell.bomb = true;
     }
+
 }
 
 function Adjacent(cell)
@@ -172,7 +210,68 @@ function Adjacent(cell)
     cellCol = cell.cellIndex;
     amount = 0;
 
-    while (amount == 0)
+    if (components.numCols == 1 && components.numCols == 1)
+    {
+        return amount;
+    }
+    if (components.numCols == 1 && cellCol == 0)
+    {
+        if (document.getElementById("cell-"+(cellRow)+"-"+(cellCol+1)).bomb === true)
+        {
+            amount++;
+        }
+        return amount;
+    }
+    if (components.numCols == 1 && cellCol == components.numRows-1)
+    {
+        if (document.getElementById("cell-"+(cellRow)+"-"+(cellCol-1)).bomb === true)
+        {
+            amount++;
+        }
+        return amount;
+    }
+    if (components.numRows == 1 && cellRow == 0)
+    {
+        if (document.getElementById("cell-"+(cellRow+1)+"-"+(cellCol)).bomb === true)
+        {
+            amount++;
+        }
+        return amount;
+    }
+    if (components.numRows == 1 && cellRow == components.numCols-1)
+    {
+        if (document.getElementById("cell-"+(cellRow-1)+"-"+(cellCol)).bomb === true)
+        {
+            amount++;
+        }
+        return amount;
+    }
+    if (components.numCols == 1)
+    {
+        if (document.getElementById("cell-"+(cellRow)+"-"+(cellCol+1)).bomb === true)
+        {
+            amount++;
+        }
+        if (document.getElementById("cell-"+(cellRow)+"-"+(cellCol-1)).bomb === true)
+        {
+            amount++;
+        }
+        return amount;
+    }
+    if (components.numRows == 1)
+    {
+        if (document.getElementById("cell-"+(cellRow+1)+"-"+(cellCol)).bomb === true)
+        {
+            amount++;
+        }
+        if (document.getElementById("cell-"+(cellRow-1)+"-"+(cellCol)).bomb === true)
+        {
+            amount++;
+        }
+        return amount;
+    }
+
+    while (components.numRows != 1 || components.numCols != 1)
     {
         if(cellRow == 0 && cellCol == 0)
         {
@@ -422,10 +521,13 @@ function PlaySound(sound)
 
 function GameOver()
 {
+    //Add X-mark to false flags
     console.log("Game over!");
     PlaySound("TNT_old.mp3");
+    clearInterval(CountTimer);
     components.alive = false;
     document.getElementById("face").textContent = "☠️";
+    document.title = "You lost...";
     document.getElementById('lost').style.display="block";
     for (let i = 0; i < components.numCols; i++)
     {
@@ -436,6 +538,28 @@ function GameOver()
             {
                 cell.backgroundColor = 'darkgray';
                 cell.textContent = components.bomb;
+            }
+        }
+    }
+}
+
+function GameWin()
+{
+    console.log("Win!");
+    PlaySound("Victory.mp3");
+    document.title = "You win!";
+    clearInterval(CountTimer);
+    components.flagged = 0;
+    document.getElementById("face").textContent = "😎";
+    document.getElementById("bombs-left").innerHTML = components.flagged;
+    for (let i = 0; i < components.numCols; i++)
+    {
+        for (let j = 0; j < components.numRows; j++)
+        {
+            cell = document.getElementById("cell-"+(i)+"-"+(j));
+            if (cell.bomb == true)
+            {
+                cell.textContent = "🚩";
             }
         }
     }
