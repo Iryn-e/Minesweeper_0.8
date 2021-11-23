@@ -14,31 +14,53 @@ var components =
 }
 var totalSeconds = 0;
 
+
 function Difficulty()
 {
-    if (document.getElementById("diff").value == "1")
+    let val = sessionStorage.getItem("diffValue");
+    diff = document.getElementById("diff");
+
+    diff.selectedIndex = val - 1;
+    if (val == "1")
     {
         components.numRows = 9;
         components.numCols = 9;
         components.numBombs = 10;
     }
-    if (document.getElementById("diff").value == "2")
+    if (val == "2")
     {
         components.numRows = 16;
         components.numCols = 16;
         components.numBombs = 40;
     }
-    if (document.getElementById("diff").value == "3")
+    if (val == "3")
     {
         components.numRows = 32;
         components.numCols = 16;
         components.numBombs = 99;
     }
-    if (document.getElementById("diff").value == "4")
+    if (val == "4")
     {
-        components.numRows = document.getElementById("nrows").value;
-        components.numCols = document.getElementById("ncols").value;
-        components.numBombs = document.getElementById("nbombs").value;
+        components.numRows = sessionStorage.getItem("nrows");
+        components.numCols = sessionStorage.getItem("ncols");
+        components.numBombs = sessionStorage.getItem("nbombs");
+    }
+}
+
+function DiffRemember()
+{
+    myDiff = document.getElementById("diff");
+    myDiff.addEventListener("change", function() {
+        sessionStorage.setItem("diffValue", this.value);
+    });
+    sessionStorage.setItem("diffValue", myDiff.value);
+    if (sessionStorage.getItem("diffValue") == 4)
+    {
+        OptionVisible();
+    }
+    else
+    {
+        reload();
     }
 }
 
@@ -46,6 +68,23 @@ function OptionVisible()
 {
     var custom = document.getElementById("hiddencustom");
     custom.style.visibility = 'visible';
+}
+
+function SetCustom()
+{
+    myCustom = document.getElementById("hiddencustom");
+    myRows = document.getElementById("nrows");
+    myCols = document.getElementById("ncols");
+    myBombs = document.getElementById("nbombs");
+    myCustom.addEventListener("set", function() {
+        sessionStorage.setItem("nrows", this.value);
+        sessionStorage.setItem("ncols", this.value);
+        sessionStorage.setItem("nbombs", this.value);
+    })
+    sessionStorage.setItem("nrows", myRows.value);
+    sessionStorage.setItem("ncols", myCols.value);
+    sessionStorage.setItem("nbombs", myBombs.value);
+    reload();
 }
 
 window.addEventListener('load', function() 
@@ -287,7 +326,6 @@ function Adjacent(cell)
             {
                 amount++;
             }
-            return amount;
         }
 
         else if(cellRow == 0 && cellCol == components.numCols-1)
@@ -304,7 +342,6 @@ function Adjacent(cell)
             {
                 amount++;
             }
-            return amount;
         }
 
         else if (cellRow == components.numRows-1 && cellCol == 0)
@@ -321,7 +358,6 @@ function Adjacent(cell)
             {
                 amount++;
             }
-            return amount;
         }
 
         else if (cellRow == components.numRows-1 && cellCol == components.numCols-1)
@@ -338,7 +374,6 @@ function Adjacent(cell)
             {
                 amount++;
             }
-            return amount;
         }
 
         else if(cellRow == 0)
@@ -363,7 +398,6 @@ function Adjacent(cell)
             {
                 amount++;
             }
-            return amount;
         }
 
         else if(cellCol == 0)
@@ -388,7 +422,6 @@ function Adjacent(cell)
             {
                 amount++;
             }
-            return amount;
         }
 
         else if (cellRow == components.numRows-1)
@@ -413,7 +446,6 @@ function Adjacent(cell)
             {
                 amount++;
             }
-            return amount;
         }
 
         else if (cellCol == components.numCols-1)
@@ -438,7 +470,6 @@ function Adjacent(cell)
             {
                 amount++;
             }
-            return amount;
         }
         
         else
@@ -477,40 +508,19 @@ function Adjacent(cell)
             }
         }
     
-        /*if (amount == 0)
+        if (amount == 0)
         {
-            for (i=-1; i<=1; i++)
-            {
-                for (j=-1; j<=1; j++)
-                {
-                    //Auto Clear needs more work
-                    newCell = document.getElementById("cell-"+(cellRow+i)+"-"+(cellCol+j));
-                    if (Adjacent(newCell) != 0)
-                    {
-                        newCell.style.backgroundColor = 'darkgray';
-                    }
-                }
-            }
-            amount = null;
-        }*/
+            FloodFill();
+        }
+
         return amount;
     }
 }
 
-/*function AutoClear(cell, i, j)
+function FloodFill()
 {
-    OnClick(cell, (i-1), (j-1))
-    OnClick(cell, (i-1), j)
-    OnClick(cell, (i-1), (j+1))
-    OnClick(cell, i, (j-1))
-    OnClick(cell, i, (j+1))
-    OnClick(cell, (i+1), (j-1))
-    OnClick(cell, (i+1), j)
-    OnClick(cell, (i+1), (j+1))
-
-    // When the Adjacent function returns a null int, it will clear
-    // all cells around it, and then the other cells if it is also empty
-}*/
+    //FloodFill Algorithm to be coded here
+}
 
 function PlaySound(sound)
 {
