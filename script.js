@@ -186,7 +186,7 @@ function CountTimer()
 
 function MouseDown()
 {
-    if (!components.alive || !components.victory)
+    if (!components.alive || components.victory)
     {
         return;
     }
@@ -194,7 +194,7 @@ function MouseDown()
 }
 function MouseUp()
 {
-    if (!components.alive || !components.victory)
+    if (!components.alive || components.victory)
     {
         return;
     }
@@ -507,19 +507,29 @@ function Adjacent(cell)
                 amount++;
             }
         }
-    
+
         if (amount == 0)
         {
-            FloodFill();
+            cell.style.backgroundColor = 'darkgray';
+            //FloodFill(cell);
         }
-
         return amount;
+
     }
 }
 
-function FloodFill()
+function FloodFill(cell)
 {
     //FloodFill Algorithm to be coded here
+    cellRow = cell.parentElement.rowIndex;
+    cellCol = cell.cellIndex;
+
+    /*if (cellRow !<= components.numRows-1 || cellCol !>= components.numCols-1)
+    {
+
+    }*/
+    cellTest = document.getElementById("cell-"+(cellRow+1)+"-"+(cellCol))
+    Adjacent(cellTest);
 }
 
 function PlaySound(sound)
